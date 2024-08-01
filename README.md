@@ -38,14 +38,41 @@ We start creating development environment.
 
 
 ---
-## Prepare Tools
+## Prepare development environment
 
-### Instal VS code
+### VS code
 [Instruction](https://code.visualstudio.com/download)
 
-* Set up PlatformIO
+### PlatformIO
 This is to replace Arduino IDE.
 [Instruction](https://platformio.org/install/ide?install=vscode)
+
+Create a new project.
+[Create a new project](./images/platformio_newproject.png)
+
+Your directoy should now look like
+```
+.
+├── LICENSE
+├── README.md
+├── include
+│   └── README
+├── lib
+│   └── README
+├── platformio.ini
+├── src
+│   └── main.cpp
+└── test
+    └── README
+```
+We will work with ```main.cpp```.
+
+
+---
+## Code to measure threshold
+
+### Prepare hardware
+
 
 ---
 # END
