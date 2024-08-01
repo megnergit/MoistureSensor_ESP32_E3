@@ -83,7 +83,7 @@ We will work with ```main.cpp```.
 
 Conenct ESP32 board to your laptop with USB mini cable.
 
-[Connect ESP23 board to laptop]
+[Connect ESP23 board to laptop](./images/connect_to_laptop.jpg)
 
 ### Code
 An example source code is in ```./src/1```.
@@ -113,15 +113,26 @@ $ tree ./src
 * Set the password of your WiFi network in ```main.cpp```. Usually the password is a long digits (=numbers).
 * Build using __dropdown menu__, instead of arrow button. 
 
+(Build using drop down menu)[./images/build.png]
+(Build successful)[./images/build_success.png]
+
 ### Upload
 * Upload using __dropdown menu__.
 
+(Upload using drop down menu)[./images/upload.png]
+(Upload successful)[./images/upload_success.png]
 
 ### Open serial monitor
 
 To check IP address of ESP32.
 The port must be ```/dev/tty.SLAB_USBtoUART```.
 As you see the IP address in our case is 192.168.178.154.
+
+(Open serial monitor)[./images/start_serial_monitor.png]
+
+(Port is ```SLAP_USBtoUART```)[./images/serial_monitor_port.png]
+
+(Check IP address of ESP32 board)[./images/serial_monitor.png]
 
 
 ### Test
