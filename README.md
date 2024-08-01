@@ -40,7 +40,7 @@ We start creating development environment.
 ---
 ## Prepare tools
 ### Instal VS code
-[Here](ttps://code.visualstudio.com/download)
+[Here](https://code.visualstudio.com/download)
 
 ---
 # END
