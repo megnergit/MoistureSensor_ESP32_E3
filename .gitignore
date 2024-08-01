@@ -6,7 +6,6 @@ src/main.cpp
 .vscode/
 .pio
 .pio/
-*~
 
 # Prerequisites
 *.d
