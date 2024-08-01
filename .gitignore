@@ -1,11 +1,10 @@
 ./README
 ./src/main.cpp
-./.gitignore
-./.gitignore~
-./.vscode
+.gitignore
+.gitignore~
 ./.vscode/
-./.pio
 ./.pio/
+*~
 
 # Prerequisites
 *.d
