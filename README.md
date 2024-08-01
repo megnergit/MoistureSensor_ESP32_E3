@@ -38,9 +38,14 @@ We start creating development environment.
 
 
 ---
-## Prepare tools
+## Prepare Tools
+
 ### Instal VS code
-[Here](https://code.visualstudio.com/download)
+[Instruction](https://code.visualstudio.com/download)
+
+* Set up PlatformIO
+This is to replace Arduino IDE.
+[Instruction](https://platformio.org/install/ide?install=vscode)
 
 ---
 # END
