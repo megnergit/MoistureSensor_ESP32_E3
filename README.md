@@ -91,15 +91,15 @@ __NOTE__
 Checked 3.3V input with a __photoresistor__ to understand how a sensor that assumes
 5V input to V_CC works when the input is 3.3V. 
 
-----  |  ----  |   ----  | ---- | ----|
-      | Bright | Neutral | Dark |     | 
-----  |  ----  |   ----  | ---- | ----| 
-3.3V  |  0.05  | 0.8     | 3.3  | [V] |
-5.0V  |  0.07  | 1.1     | 4.7  |     |
-----  |  ----  |   ----  | ---- | ----| 
-3.3V  |  0     | 840     | 4095 | [ADU] |
-5.0V  |  0     | 1280    | 4095 |     | 
-----  |  ----  |   ----  | ---- | ----|
+
+|      | Bright | Neutral | Dark |     | 
+|----  |  ----  |   ----  | ---- | ----| 
+|3.3V  |  0.05  | 0.8     | 3.3  | [V] |
+|5.0V  |  0.07  | 1.1     | 4.7  |     |
+|----  |  ----  |   ----  | ---- | ----| 
+|3.3V  |  0     | 840     | 4095 | [ADU] |
+|5.0V  |  0     | 1280    | 4095 |     | 
+|----  |  ----  |   ----  | ---- | ----|
 
 It looks indeed the dynamic range is smaller for 3.3V input
 (the bright end will saturate faster), but working fine.
