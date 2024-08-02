@@ -44,10 +44,11 @@ We start creating development environment.
 [Instruction](https://code.visualstudio.com/download)
 
 ### PlatformIO
-This is to replace Arduino IDE.
+
+PlatformIO replaces Arduino IDE.
 [Instruction](https://platformio.org/install/ide?install=vscode)
 
-Create a new project.
+* Create a new project.
 ![Create a new project](./images/platformio_newproject.png)
 
 * Pick 'NodeMCU ESP-32S' which we are going to use below. 
@@ -85,6 +86,27 @@ Conenct ESP32 board to your laptop with USB mini cable.
 
 ![Connect ESP23 board to laptop](./images/connect_to_laptop.jpg)
 
+__NOTE__
+
+Checked 3.3V input with a __photoresistor__ to understand how a sensor that assumes
+5V input to V_CC works when the input is 3.3V. 
+
+      | Bright | Neutral | Dark | 
+----  |  ----  |   ----  | ---- | ----| 
+3.3V  |  0.05  | 0.8     | 3.3  | [V] |
+5.0V  |  0.07  | 1.1     | 4.7  |     |
+----  |  ----  |   ----  | ---- | ----| 
+3.3V  |  0     | 840     | 4095 | [ADU] |
+5.0V  |  0     | 1280    | 4095 |     | 
+----  |  ----  |   ----  | ---- | ----|
+
+It looks indeed the dynamic range is smaller for 3.3V input
+(the bright end will saturate faster), but working fine.
+
+For the safety of GPIO input (it works with 5V input, but the
+specification is 3.3V), let us use 3.3V input.
+
+
 ### Code
 An example source code is in ```./src/1```.
 
@@ -95,7 +117,7 @@ Make sure ```src_dir``` of ```./platformio.ini``` points to ```./src/1```
 platform = espressif32
 board = nodemcu-32s
 framework = arduino
-src_dir = "src_1"
+src_dir = "src/1"
 ````
 
 Make sure there is no ```main.cpp``` directly under ```./src```
@@ -137,7 +159,7 @@ As you see the IP address in our case is 192.168.178.154.
 
 ### Test
 
-... if we have reading of the moisture sensor.
+If the code and the hardware are working well, we should see ...
 
 ```
 $ curl 192.168.178.154
@@ -146,6 +168,7 @@ $ curl 192.168.178.154
 4095
 </body></html>
 HTTP/1.1 200 OK
+```
 
 ### Measure threshould
 
@@ -156,6 +179,30 @@ HTTP/1.1 200 OK
 * Not the output reading when you think that is the border between dry and wet.
 
 ---
+## Deep Sleep
+
+EPS32 has a deep sleep mode were ULP (ultra lower power co-processor) is
+running (main CPU and network are off). In the deep sleep mode, the
+current is supposed to be 10-150 micro A.
+
+We will rewrite the code to implement
+
+* modem sleep / light sleep / deep sleep 
+* hibernation
+* monitor current
+
+The code is in ```./src/2```. Pleaes edit ```platformio.ini``` like this.
+```
+[env:nodemcu-32s]
+platform = espressif32
+board = nodemcu-32s
+framework = arduino
+src_dir = "src/1"
+
+```
+
+
+### 
 
 
 
