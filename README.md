@@ -1,5 +1,4 @@
-# Create a moisure sensor with ESP32. 
-
+# Create a moisure sensor with ESP32
 
 ## Goal
 
@@ -36,8 +35,7 @@ We start creating development environment.
 * Build and upload the code
 * Test it
 
-
----
+------------------------------------------------------------------------
 ## Prepare development environment
 
 ### VS code
@@ -72,7 +70,7 @@ Your directoy should now look like
 ```
 We will work with ```main.cpp```.
 
----
+------------------------------------------------------------------------
 ## Measure threshold
 
 ### Prepare hardware
@@ -92,14 +90,13 @@ Checked 3.3V input with a __photoresistor__ to understand how a sensor that assu
 5V input to V_CC works when the input is 3.3V. 
 
 
-|      | Bright | Neutral | Dark |     | 
-|----  |  ----  |   ----  | ---- | ----| 
-|3.3V  |  0.05  | 0.8     | 3.3  | [V] |
-|5.0V  |  0.07  | 1.1     | 4.7  |     |
-|----  |  ----  |   ----  | ---- | ----| 
-|3.3V  |  0     | 840     | 4095 | [ADU] |
-|5.0V  |  0     | 1280    | 4095 |     | 
-|----  |  ----  |   ----  | ---- | ----|
+|      | Bright | Neutral | Dark |      | 
+|----  |  ----  |   ----  | ---- | ---- | 
+|3.3V  |  0.05  | 0.8     | 3.3  | [V]  |
+|5.0V  |  0.07  | 1.1     | 4.7  |      |
+|----  |  ----  |   ----  | ---- | ---- | 
+|3.3V  |  0     | 840     | 4095 | [ADU]|
+|5.0V  |  0     | 1280    | 4095 |      | 
 
 It looks indeed the dynamic range is smaller for 3.3V input
 (the bright end will saturate faster), but working fine.
@@ -114,21 +111,44 @@ An example source code is in ```./src/1```.
 Make sure ```src_dir``` of ```./platformio.ini``` points to ```./src/1```
 
 ```
+[platformio]
+src_dir = src/1
+
 [env:nodemcu-32s]
 platform = espressif32
 board = nodemcu-32s
 framework = arduino
-src_dir = "src/1"
+
 ````
 
-Make sure there is no ```main.cpp``` directly under ```./src```
+Please consolidate the project directory with the repo that you cloned
+from this repol 
+
+The ```src``` directory looks like this.
 
 ```
-$ tree ./src
-./src
-└── 1
-    └── main.cpp
+$ tree .
+.
+├── 1
+│   └── main.cpp
+├── 2
+│   └── main.cpp
+├── 3
+│   ├── main.cpp
+│   └── send_mail_synapse.h
+├── 4
+│   └── main.cpp
+└── 5
+    ├── main.cpp
+    └── send_mail_synapse.h
 ```
+
+1: Minimum code to test hardware.
+2: 'Deep sleep' is implemented.
+3: E-mail sending is implemented.
+4: Conditional behavior is implemented.
+5: Final code with all of above 1-4.
+
 
 ### Build
 
@@ -179,7 +199,7 @@ HTTP/1.1 200 OK
 * Pour water in the flower pot slowly.
 * Not the output reading when you think that is the border between dry and wet.
 
----
+------------------------------------------------------------------------
 ## Deep Sleep
 
 EPS32 has a deep sleep mode were ULP (ultra lower power co-processor) is
@@ -188,24 +208,76 @@ current is supposed to be 10-150 micro A.
 
 We will rewrite the code to implement
 
+* monitor power consumption
 * modem sleep / light sleep / deep sleep 
-* hibernation
-* monitor current
 
-The code is in ```./src/2```. Pleaes edit ```platformio.ini``` like this.
+There is yet another low-energy mode called hibernation. Hibernation
+stops RTC (but only counts RTC interval).  The on-board clock might be
+skewed after awaking from hibernation.  We do not try that.
+
+
+I wanted measure the realtime power consumption by measuring the current.
+However, the current measurment requires another board in order to poll
+fast (like every 4 ms). I gave it up, and just measure the voltage decline.
+
+
+### Replace delay to ```esp_deep_sleep```
+
+The point is that every time ESP32 wakes up, it starts from ```setup()```,
+and gets into sleep at ```esp_deep_sleep()``` at the end of ```setup()```.
+
+This means the code repeat ```setup()``` forever, and never gets into
+```loop()```. So do not put anything in ```loop()```. Put all
+procedures you need into ```serup()```.
+
+The source code is at ```src/2/main.dpp```
+
+Edit ```platformio.ini``` like this.
 ```
+[platformio]
+src_dir = src/2
+
 [env:nodemcu-32s]
 platform = espressif32
 board = nodemcu-32s
 framework = arduino
-src_dir = "src/1"
 
 ```
 
 
-### 
+### Send e-mail using gmail server.
+
+<!-- => Let us change the goal to "send a message to WhatsApp". -->
+
+## Create sender email account
+
+We will use Gmail. [Instruction](https://randomnerdtutorials.com/esp32-send-email-smtp-server-arduino-ide/).
+
+```
+If you’re using a Gmail account, these are the SMTP Server details:
+
+SMTP Server: smtp.gmail.com
+SMTP username: Complete Gmail address
+SMTP password: Your Gmail password
+SMTP port (TLS): 587
+SMTP port (SSL): 465
+SMTP TLS/SSL required: yes
+
+```
+
+------------------------------------------------------------------------
+## Send e-mail
+
+This section is totally dependent on the "Synapse's" [web site](https://synapse.kyoto/tips/esp-gmail/page001.html).
+I only put the whole code into a header code to separate from ```main.cpp``.
 
 
-
----
+<--!
+1: Minimum code to test hardware.
+2: 'Deep sleep' is implemented.
+3: E-mail sending is implemented.
+4: Conditional behavior is implemented.
+5: Final code with all of above 1-4.
+-->
+------------------------------------------------------------------------
 # END
