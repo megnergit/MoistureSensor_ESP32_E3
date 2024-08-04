@@ -1,4 +1,4 @@
-# Create a moisure sensor with ESP32
+# Create a moisture sensor with ESP32
 
 ## Goal
 
@@ -14,16 +14,16 @@ We start creating development environment.
 
 1. Prepare tools
 * Install VS code
-* Add Platform IO extention to VS code
+* Add Platform IO extension to VS code
 * Create a new project
 
-2. Code to measure threshould (without e-mail part)
+2. Code to measure threshold (without e-mail part)
 * Write measure_threshold.cpp
 * Build and upload the code to ESP32
-* Measure the threshould
+* Measure the threshold
 
 3. Test deep sleep
-* Write mosture_deepsleep.cpp
+* Write deep sleep code
 * With deep sleep function
 * Measure voltage decline
 * Build and upload the code
@@ -52,8 +52,7 @@ PlatformIO replaces Arduino IDE.
 * Pick 'NodeMCU ESP-32S' which we are going to use below. 
 ![Project setting](./images/project_setting.png)
 
-
-Your directoy should now look like
+Your directoty should now look like
 ```
 .
 ├── LICENSE
@@ -80,7 +79,7 @@ We will work with ```main.cpp```.
 
 ![The wiring](./images/wiring.jpg)
 
-Conenct ESP32 board to your laptop with USB mini cable.
+Connect ESP32 board to your laptop with USB mini cable.
 
 ![Connect ESP23 board to laptop](./images/connect_to_laptop.jpg)
 
@@ -122,7 +121,7 @@ framework = arduino
 ````
 
 Please consolidate the project directory with the repo that you cloned
-from this repol 
+from this repo.
 
 The ```src``` directory looks like this.
 
@@ -153,7 +152,7 @@ $ tree .
 ### Build
 
 * Set the name of your WiFi network in ```main.cpp```
-* Set the password of your WiFi network in ```main.cpp```. Usually the password is a long digits (=numbers).
+* Set the password of your WiFi network in ```main.cpp```. Usually the password is a numbers with large digit.
 * Build using __dropdown menu__, instead of arrow button. 
 
 ![Build using drop down menu](./images/build.png)
@@ -191,7 +190,7 @@ $ curl 192.168.178.154
 HTTP/1.1 200 OK
 ```
 
-### Measure threshould
+### Measure threshold
 
 * Prepare a flower pot with completely dried soil
 * Stick moisture sensor to the soil
@@ -217,7 +216,7 @@ skewed after awaking from hibernation.  We do not try that.
 
 
 I wanted measure the realtime power consumption by measuring the current.
-However, the current measurment requires another board in order to poll
+However, the current measurement requires another board in order to poll
 fast (like every 4 ms). I gave it up, and just measure the voltage decline.
 
 
@@ -228,7 +227,7 @@ and gets into sleep at ```esp_deep_sleep()``` at the end of ```setup()```.
 
 This means the code repeat ```setup()``` forever, and never gets into
 ```loop()```. So do not put anything in ```loop()```. Put all
-procedures you need into ```serup()```.
+procedures you need into ```setup()```.
 
 The source code is at ```src/2/main.dpp```
 
@@ -258,8 +257,7 @@ We will use Gmail. [Instruction](https://randomnerdtutorials.com/esp32-send-emai
 The points are as follows.
 
 1. You will create a new gmail account in a standard way.
-![Create new Gmail account](./images/create_new_gmail_account.png)
-The from [here](https://www.google.com/gmail/about/).
+![Create new Gmail account](./images/create_new_gmail_account.png) from [here](https://www.google.com/gmail/about/).
 
 2. After you created an account, set 'App password'. This is what we need
 to connect our ESP32 to Gmail smtp server
@@ -351,7 +349,7 @@ framework = arduino
 You can disconnect ESP32 from your laptop, but can use 18650 battery.
 Use 5V output. Somehow WiFi does not work with 3.3V. 
 
-![With 18650 battery](./images/battery.png)
+![With 18650 battery](./images/battery.jpg)
 
 ------------------------------------------------------------------------
 # END
