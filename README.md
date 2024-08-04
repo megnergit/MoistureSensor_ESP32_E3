@@ -351,13 +351,7 @@ framework = arduino
 You can disconnect ESP32 from your laptop, but can use 18650 battery.
 Use 5V output. Somehow WiFi does not work with 3.3V. 
 
+![With 18650 battery](./images/battery.png)
 
-<--!
-1: Minimum code to test hardware.
-2: 'Deep sleep' is implemented.
-3: E-mail sending is implemented.
-4: Conditional behavior is implemented.
-5: Final code with all of above 1-4.
--->
 ------------------------------------------------------------------------
 # END
